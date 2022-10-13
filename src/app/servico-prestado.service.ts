@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { ServicoPrestado } from './servico-prestado/servicoPrestado';
 import { environment } from '../environments/environment'
 import { ServicoPrestadoBusca } from './servico-prestado/servico-prestado-lista/servicoPrestadoBusca';
-import { url } from 'inspector';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +12,8 @@ export class ServicoPrestadoService {
 
   apiURL: string = environment.apiURLBase + "/api/servicos-prestados"
 
-  constructor(private http: HttpClient) { 
-    
+  constructor(private http: HttpClient) {
+
   }
 
   salvar(servicoPrestado: ServicoPrestado): Observable<ServicoPrestado> {
@@ -22,12 +21,12 @@ export class ServicoPrestadoService {
 
   }
 
-  buscar(nome: string, mes: number) : Observable<ServicoPrestadoBusca[]>{
+  buscar(nome: string, mes: number): Observable<ServicoPrestadoBusca[]> {
 
     const httpParams = new HttpParams()
-    .set("nome", nome)
-    .set("mes", mes.toString());
-   
+      .set("nome", nome)
+      .set("mes", mes ? mes.toString() : '');
+
     const url = this.apiURL + "?" + httpParams.toString();
     return this.http.get<any>(url)
   }
@@ -35,3 +34,4 @@ export class ServicoPrestadoService {
 }
 
 
+  
